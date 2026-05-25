@@ -1,0 +1,83 @@
+{% extends "blog/base.html" %} {% block content %}
+<div class="content-section shadow-sm p-4 mb-5 bg-white rounded">
+  <div class="media align-items-center mb-4">
+    <img
+      class="rounded-circle account-img shadow-sm"
+      src="{{ user.profile.image.url }}"
+      style="
+        width: 100px;
+        height: 100px;
+        border: 4px solid #f8f9fa;
+        object-fit: cover;
+      "
+    />
+    <div class="media-body ml-4">
+      <h2 class="account-heading mb-0 font-weight-bold">{{ user.username }}</h2>
+      <p class="text-muted mb-0">{{ user.email }}</p>
+    </div>
+  </div>
+
+  <div class="border-top border-bottom py-3 mb-4">
+    <div class="row text-center">
+      <div class="col-6 border-right">
+        <small class="text-muted d-block text-uppercase">Durum</small>
+        <span class="badge badge-success">Aktif</span>
+      </div>
+      <div class="col-6">
+        <small class="text-muted d-block text-uppercase">Katılma Tarihi</small>
+        <span class="font-weight-bold"
+          >{{ user.date_joined|date:"d F Y" }}</span
+        >
+      </div>
+    </div>
+  </div>
+
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <fieldset class="form-group">
+      <legend
+        class="mb-4 pb-2 text-info"
+        style="font-size: 1.2rem; font-weight: 600"
+      >
+        Profil Bilgilerini Güncelle
+      </legend>
+
+      {% for field in u_form %}
+      <div class="form-group">
+        <label class="font-weight-bold text-dark small"
+          >{{ field.label }}</label
+        >
+        <input
+          type="{{ field.field.widget.input_type|default:'text' }}"
+          name="{{ field.name }}"
+          value="{{ field.value|default:'' }}"
+          class="form-control form-control-sm {% if field.errors %}is-invalid{% endif %}"
+          placeholder="{{ field.label }} giriniz..."
+        />
+        {% for error in field.errors %}
+        <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+      </div>
+      {% endfor %}
+
+      <div class="form-group mt-3">
+        <label class="font-weight-bold text-dark small">Profil Fotoğrafı</label>
+        <div class="custom-file">
+          <input
+            type="file"
+            name="image"
+            class="form-control-file border p-1"
+            id="imageInput"
+          />
+        </div>
+      </div>
+    </fieldset>
+
+    <div class="form-group mt-4">
+      <button class="btn btn-info btn-block shadow-sm" type="submit">
+        Bilgileri Güncelle
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock content %}

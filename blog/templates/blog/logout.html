@@ -1,0 +1,11 @@
+{% extends "blog/base.html" %} {% block content %}
+<div class="content-section">
+  <h2 class="mb-4">Başarıyla çıkış yaptınız.</h2>
+  <div class="border-top pt-3">
+    <small class="text-muted">
+      Yeniden giriş yapmak ister misiniz?
+      <a class="ml-2" href="{% url 'login' %}">Giriş Yap</a>
+    </small>
+  </div>
+</div>
+{% endblock content %}
