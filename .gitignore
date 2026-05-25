@@ -140,3 +140,6 @@ Thumbs.db
 /media/profile_pics/
 static/
 staticfiles/
+
+
+.env
